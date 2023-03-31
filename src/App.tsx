@@ -1,8 +1,9 @@
 import "./App.css";
+import Push from "push.js"
 
 function App() {
   if (navigator.serviceWorker) {
-    navigator.serviceWorker.register("sw.js");
+    navigator.serviceWorker.register("/sw.ts");
   }
 
   return (
@@ -19,13 +20,7 @@ function App() {
 export default App;
 
 function showNotification() {
-  Notification.requestPermission((result) => {
-    if (result === "granted") {
-      navigator.serviceWorker.ready.then((registration) => {
-        registration.showNotification("Test Push Notification", {
-          body: "Hello!",
-        });
-      });
-    }
-  });
+  Push.create("test notification", {
+    body:"Привет"
+  })
 }
