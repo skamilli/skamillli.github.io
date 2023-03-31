@@ -1,16 +1,12 @@
 import "./App.css";
 import { subscribe } from "../push";
 
-const title = "Push notification";
-const options = {
-    body: "test push"
- };
-
-navigator.serviceWorker.ready.then(function(serviceWorker) {
-  serviceWorker.showNotification(title, options);
-});
-
 function App() {
+  if (navigator.serviceWorker) {
+    navigator.serviceWorker.register("sw.js");
+    showNotification();
+  }
+
   return (
     <>
       {navigator.serviceWorker ? (
@@ -23,3 +19,15 @@ function App() {
 }
 
 export default App;
+
+function showNotification() {
+  Notification.requestPermission((result) => {
+    if (result === "granted") {
+      navigator.serviceWorker.ready.then((registration) => {
+        registration.showNotification("Test Push Notification", {
+          body: "Hello!",
+        });
+      });
+    }
+  });
+}
