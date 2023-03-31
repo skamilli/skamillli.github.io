@@ -1,16 +1,14 @@
 import "./App.css";
-import { subscribe } from "../push";
 
 function App() {
   if (navigator.serviceWorker) {
     navigator.serviceWorker.register("sw.js");
-    showNotification();
   }
 
   return (
     <>
       {navigator.serviceWorker ? (
-        <button onClick={subscribe}>Подписаться на уведомления</button>
+        <button onClick={showNotification}>Получить уведомление</button>
       ) : (
         <h1>Браузер не поддерживает</h1>
       )}
